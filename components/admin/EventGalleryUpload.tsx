@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { Plus, X, Loader2 } from "lucide-react";
-import { uploadEventImage } from "@/lib/eventActions";
+import { bulkUploadEventImages } from "@/lib/eventActions";
 
 export function EventGalleryUpload({
   urls,
@@ -19,18 +19,22 @@ export function EventGalleryUpload({
   const handleFiles = async (files: FileList) => {
     setUploading(true);
     setError(null);
-    const uploaded: string[] = [];
-    for (const file of Array.from(files)) {
-      const formData = new FormData();
-      formData.append("file", file);
-      const result = await uploadEventImage(formData);
-      if (result.success && result.url) {
-        uploaded.push(result.url);
-      } else {
-        setError(result.error || "Some images failed to upload");
-      }
+
+    const formData = new FormData();
+    Array.from(files).forEach((file) => formData.append("files", file));
+
+    // All files upload in parallel server-side, in a single round trip,
+    // instead of one request per file.
+    const result = await bulkUploadEventImages(formData);
+
+    if (result.urls.length > 0) {
+      onChange([...urls, ...result.urls]);
     }
-    onChange([...urls, ...uploaded]);
+    if (result.failures.length > 0) {
+      const names = result.failures.map((f) => f.fileName).join(", ");
+      setError(`Failed to upload: ${names}`);
+    }
+
     setUploading(false);
   };
 
