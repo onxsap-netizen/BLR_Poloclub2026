@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import GalleryGrid from "@/components/sections/GalleryGrid";
 import CtaBand from "@/components/sections/CtaBand";
+import { getGalleryPhotos } from "@/lib/publicData";
 
 export const metadata: Metadata = {
   title: "Member Gallery",
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
     "Photos from ThePoloClub.BLR drives, meets, and events — captured by our members across Bangalore and beyond.",
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const photos = await getGalleryPhotos();
+
   return (
     <>
       <section className="relative flex min-h-[40vh] items-center justify-center bg-base pt-24">
@@ -22,7 +25,7 @@ export default function GalleryPage() {
           </h1>
         </div>
       </section>
-      <GalleryGrid />
+      <GalleryGrid photos={photos} />
       <CtaBand />
     </>
   );
