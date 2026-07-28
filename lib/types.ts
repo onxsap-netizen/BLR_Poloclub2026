@@ -72,3 +72,11 @@ export interface Member {
   badges: string[];
   joined_at: string;
 }
+
+export interface GalleryPhoto {
+  id: string;
+  created_at: string;
+  url: string;
+  caption: string;
+  sort_order: number;
+}
