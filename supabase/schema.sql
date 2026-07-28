@@ -170,3 +170,31 @@ create policy "Anyone can upload insurance docs"
   on storage.objects for insert
   to anon
   with check (bucket_id = 'insurance-docs');
+-- ============================================================
+-- TABLE: gallery_photos (admin-managed public Gallery page)
+-- ============================================================
+create table if not exists gallery_photos (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  url text not null,
+  caption text not null default '',
+  sort_order int not null default 0
+);
+
+create index if not exists idx_gallery_photos_sort on gallery_photos(sort_order, created_at desc);
+
+alter table gallery_photos enable row level security;
+
+create policy "Anyone can view gallery photos"
+  on gallery_photos for select
+  to anon
+  using (true);
+
+insert into storage.buckets (id, name, public)
+values ('gallery-photos', 'gallery-photos', true)
+on conflict (id) do nothing;
+
+create policy "Anyone can view gallery photos bucket"
+  on storage.objects for select
+  to anon
+  using (bucket_id = 'gallery-photos');
