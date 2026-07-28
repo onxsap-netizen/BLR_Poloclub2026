@@ -3,12 +3,12 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 const images = [
-  "https://drive.google.com/uc?export=view&id=1p2a3avFf3jEKILffNABrbNxcjidL1FG7",
-  "https://drive.google.com/uc?export=view&id=1CUV-s3WWzLYycCkbLlVtunYhL_UivJPy",
-  "https://drive.google.com/uc?export=view&id=1cfsgAMAmFNLNecD0o8Mgdgy3NqlQWhIv",
-  "https://drive.google.com/uc?export=view&id=1tZK9DNo_4lLwwZzCpereGGoi32NXmy5s",
-  "https://drive.google.com/uc?export=view&id=1mroDw02LAULdzTN6F7fmiSiI049sjNeK",
-  "https://drive.google.com/uc?export=view&id=1zCQ8pjc7TnZgG8rIFHptcN8DeuRl5mQw",
+  "/images/gallery-1.jpg",
+  "/images/gallery-2.jpg",
+  "/images/gallery-3.jpg",
+  "/images/gallery-4.jpg",
+  "/images/gallery-5.jpg",
+  "/images/gallery-5.jpg",
 ];
 export default function GalleryPreview() {
   return (
