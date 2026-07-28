@@ -1,19 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { Users, CalendarDays } from "lucide-react";
-import type { Application, Event } from "@/lib/types";
+import { Users, CalendarDays, Images } from "lucide-react";
+import type { Application, Event, GalleryPhoto } from "@/lib/types";
 import AdminApplications from "./AdminApplications";
 import AdminEvents from "./AdminEvents";
+import AdminGallery from "./AdminGallery";
 
-type Tab = "applications" | "events";
+type Tab = "applications" | "events" | "gallery";
 
 export default function AdminDashboard({
   initialApplications,
   initialEvents,
+  initialGalleryPhotos,
 }: {
   initialApplications: Application[];
   initialEvents: Event[];
+  initialGalleryPhotos: GalleryPhoto[];
 }) {
   const [tab, setTab] = useState<Tab>("applications");
 
@@ -56,13 +59,25 @@ export default function AdminDashboard({
           >
             <CalendarDays size={16} /> Events
           </button>
+          <button
+            onClick={() => setTab("gallery")}
+            className={`focus-ring flex items-center gap-2 border-b-2 px-4 py-3 font-display text-sm font-semibold uppercase tracking-wider transition-colors ${
+              tab === "gallery"
+                ? "border-accent text-off"
+                : "border-transparent text-silver hover:text-silver-light"
+            }`}
+          >
+            <Images size={16} /> Gallery
+          </button>
         </div>
 
         <div className="mt-8">
           {tab === "applications" ? (
             <AdminApplications initialApplications={initialApplications} />
-          ) : (
+          ) : tab === "events" ? (
             <AdminEvents initialEvents={initialEvents} />
+          ) : (
+            <AdminGallery initialPhotos={initialGalleryPhotos} />
           )}
         </div>
       </div>
