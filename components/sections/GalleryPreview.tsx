@@ -1,18 +1,15 @@
 "use client";
-
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-
 const images = [
-  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1494905998402-395d579af36f?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1571127236794-81c0bbfe1ce3?q=80&w=800&auto=format&fit=crop",
+  "https://drive.google.com/uc?export=view&id=1p2a3avFf3jEKILffNABrbNxcjidL1FG7",
+  "https://drive.google.com/uc?export=view&id=1CUV-s3WWzLYycCkbLlVtunYhL_UivJPy",
+  "https://drive.google.com/uc?export=view&id=1cfsgAMAmFNLNecD0o8Mgdgy3NqlQWhIv",
+  "https://drive.google.com/uc?export=view&id=1tZK9DNo_4lLwwZzCpereGGoi32NXmy5s",
+  "https://drive.google.com/uc?export=view&id=1mroDw02LAULdzTN6F7fmiSiI049sjNeK",
+  "https://drive.google.com/uc?export=view&id=1zCQ8pjc7TnZgG8rIFHptcN8DeuRl5mQw",
 ];
-
 export default function GalleryPreview() {
   return (
     <section className="carbon-bg relative py-24 md:py-32">
@@ -39,7 +36,6 @@ export default function GalleryPreview() {
             Full Gallery <ArrowUpRight size={16} />
           </Link>
         </motion.div>
-
         <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
           {images.map((src, i) => (
             <motion.div
