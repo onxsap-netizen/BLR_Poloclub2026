@@ -56,7 +56,7 @@ export default function Footer() {
             </h4>
             <div className="mt-4 flex gap-3">
               <a
-                href="#"
+                href="https://www.instagram.com/thepoloclub.blr/"
                 aria-label="Instagram"
                 className="focus-ring flex h-10 w-10 items-center justify-center rounded-full border border-base-border transition-colors hover:border-accent hover:text-accent"
               >
