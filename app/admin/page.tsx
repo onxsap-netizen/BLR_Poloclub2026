@@ -1,5 +1,6 @@
 import { getApplications } from "@/lib/adminActions";
 import { getAdminEvents } from "@/lib/eventActions";
+import { getAdminGalleryPhotos } from "@/lib/galleryActions";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import ConfigError from "@/components/admin/ConfigError";
 
@@ -8,11 +9,18 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   try {
-    const [applications, events] = await Promise.all([
+    const [applications, events, galleryPhotos] = await Promise.all([
       getApplications(),
       getAdminEvents(),
+      getAdminGalleryPhotos(),
     ]);
-    return <AdminDashboard initialApplications={applications} initialEvents={events} />;
+    return (
+      <AdminDashboard
+        initialApplications={applications}
+        initialEvents={events}
+        initialGalleryPhotos={galleryPhotos}
+      />
+    );
   } catch (err) {
     return (
       <ConfigError
