@@ -83,7 +83,37 @@ export default function JoinForm() {
         status: "pending",
       });
 
-      if (error) throw error;
+     if (error) throw error;
+
+      // Also sync to Google Sheet (fire-and-forget, doesn't block success)
+      fetch("/api/sheets-sync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: formData.full_name,
+          phone_number: formData.phone_number,
+          email: formData.email,
+          city: formData.city,
+          occupation: formData.occupation,
+          polo_variant: formData.polo_variant,
+          car_year: formData.car_year,
+          transmission: formData.transmission,
+          fuel_type: formData.fuel_type,
+          car_colour: formData.car_colour,
+          registration_number: formData.registration_number,
+          is_modified: formData.is_modified === "yes",
+          modification_details: formData.modification_details || "",
+          why_join: formData.why_join,
+          polo_story: formData.polo_story,
+          previous_club: formData.previous_club === "yes",
+          ever_removed: formData.ever_removed === "yes",
+          emergency_contact_name: formData.emergency_contact_name,
+          emergency_contact_number: formData.emergency_contact_number,
+          has_insurance: formData.has_insurance === "yes",
+          status: "pending",
+        }),
+      }).catch((err) => console.error("Sheet sync failed:", err));
+
       setSuccess(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
