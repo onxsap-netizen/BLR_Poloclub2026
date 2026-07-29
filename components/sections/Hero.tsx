@@ -8,7 +8,6 @@ import ParticleField from "@/components/ui/ParticleField";
 const stats = [
   { value: "100+", label: "Members" },
   { value: "∞", label: "Drives" },
-  { value: "15+", label: "Cities" },
   { value: "100%", label: "Passion" },
 ];
 
