@@ -9,6 +9,7 @@ const stats = [
   { value: "100+", label: "Members" },
   { value: "∞", label: "Drives" },
   { value: "100%", label: "Passion" },
+  { value: "1+", label: "Cities" },
 ];
 
 export default function Hero() {
