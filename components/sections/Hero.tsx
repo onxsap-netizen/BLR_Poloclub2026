@@ -6,8 +6,8 @@ import { ChevronDown } from "lucide-react";
 import ParticleField from "@/components/ui/ParticleField";
 
 const stats = [
-  { value: "500+", label: "Members" },
-  { value: "100+", label: "Drives" },
+  { value: "100+", label: "Members" },
+  { value: "∞", label: "Drives" },
   { value: "15+", label: "Cities" },
   { value: "100%", label: "Passion" },
 ];
