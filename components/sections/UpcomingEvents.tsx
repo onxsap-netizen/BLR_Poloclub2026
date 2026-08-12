@@ -1,3 +1,4 @@
+import EventRegisterButton from "@/components/events/EventRegisterButton";
 "use client";
    import { useState } from "react";
    import RegisterDialog from "@/components/events/RegisterDialog";
