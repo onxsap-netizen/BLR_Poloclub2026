@@ -1,114 +1,129 @@
-export type CocSection = { title: string; items: string[] };
+"use client";
 
-export const codeOfConduct: CocSection[] = [
-  {
-    title: "Respect First",
-    items: [
-      "Treat every member, their family, fellow road users, venue staff, sponsors, and partners with courtesy and respect.",
-    ],
-  },
-  {
-    title: "Drive Responsibly",
-    items: [
-      "Safety is our highest priority.",
-      "All participating vehicles must be in safe, roadworthy condition.",
-      "Drive cautiously, adhering to speed limits and road rules at all times.",
-      "Avoid dangerous overtakes, racing, drifting, or reckless driving.",
-      "Maintain convoy discipline.",
-      "Carry a basic emergency kit and contact details during events.",
-      "Respect instructions given by the Convoy Coordinator and Event Team at all times.",
-      "Adhere to child safety seat regulations when children are present.",
-    ],
-  },
-  {
-    title: "Pops & Bangs / Revving",
-    items: [
-      "Unnecessary revving, pops & bangs, launch control, or excessive exhaust noise is not permitted during community events.",
-      "These are allowed only at a designated location and only after approval from the Event Coordinator.",
-    ],
-  },
-  {
-    title: "Event Rules",
-    items: [
-      "A safety and itinerary briefing will be conducted before each event.",
-      "Arrive on time to avoid delays and ensure smooth coordination.",
-      "Cars without number plates will not be tolerated.",
-      "Group driving: maintain a safe following distance, use hand signals or agreed communication devices, and stick to designated routes.",
-      "Park responsibly, avoiding damage to property or inconvenience to others.",
-      "Follow all laws and ordinances of the areas visited during events.",
-    ],
-  },
-  {
-    title: "Environmental Responsibilities",
-    items: [
-      "Dispose of all trash properly; leave locations cleaner than found.",
-      "Avoid unnecessary idling and maintain your vehicle to reduce emissions.",
-      "Avoid damaging natural environments during off-road activities.",
-    ],
-  },
-  {
-    title: "Members Only",
-    items: [
-      "Club events are exclusively for registered members unless otherwise announced.",
-    ],
-  },
-  {
-    title: "No Alcohol or Drugs",
-    items: [
-      "Driving under the influence of alcohol or drugs is strictly prohibited. Any member found violating this rule will be removed from the event immediately.",
-    ],
-  },
-  {
-    title: "Represent the Community",
-    items: [
-      "Every member represents ThePoloClub.BLR. Conduct yourself in a manner that reflects positively on the community both on and off the road.",
-    ],
-  },
-  {
-    title: "Zero Tolerance",
-    items: [
-      "Any behaviour that compromises the safety, reputation, or experience of other members - including repeated rule violations, aggressive behaviour, or misconduct - may result in immediate removal from the event and/or permanent removal from ThePoloClub.BLR without prior notice.",
-    ],
-  },
-  {
-    title: "Dispute Resolution",
-    items: [
-      "Address conflict privately and respectfully, involving club leaders. Disputes should not be handled in the group.",
-      "Concerns or violations can be reported confidentially, without fear of reprisal.",
-    ],
-  },
-  {
-    title: "Legal and Liability",
-    items: [
-      "Ensure your vehicle is insured as per legal requirements.",
-      "Members acknowledge personal responsibility during events.",
-      "The club is not responsible for individual actions or accidents during official and non-official events.",
-    ],
-  },
-  {
-    title: "Events & Costs",
-    items: [
-      "Most regular drives and meets run on a Dutch basis - each member bears their own costs (food, beverages, tolls, fuel, etc.).",
-      "Where an event involves photography, videography, venue bookings, merchandise, or permits, a participation fee may be announced in advance, before registrations open.",
-    ],
-  },
-  {
-    title: "WhatsApp Group Etiquette",
-    items: [
-      "Treat all members with courtesy and respect.",
-      "Keep conversations relevant to the community, events, Volkswagen, and automotive discussions.",
-      "No abusive language, personal attacks, bullying, harassment, or discrimination of any kind.",
-      "No political, religious, offensive, NSFW, or unrelated promotional content without prior approval from the Community Team.",
-      "Respect differing opinions and maintain healthy discussions.",
-      "Avoid spam, repeated forwards, or excessive messages.",
-    ],
-  },
-];
+import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { AlertCircle, Loader2 } from "lucide-react";
+import { codeOfConduct, cocImportant, cocMotto } from "@/lib/codeOfConduct";
 
-export const cocImportant =
-  "Violation of any community or event rule may result in immediate removal from the event and/or permanent removal from ThePoloClub.BLR without any refund or prior notice. All decisions made by the organising team are final.";
+type Step4RulesProps = {
+  onSubmit?: () => void;
+  onBack?: () => void;
+  submitting?: boolean;
+  submitError?: string | null;
+  [key: string]: unknown;
+};
 
-export const cocMotto =
-  "We don't just drive together. We represent a community together.";
+export default function Step4Rules({
+  onSubmit,
+  onBack,
+  submitting = false,
+  submitError = null,
+}: Step4RulesProps) {
+  const [scrolledToBottom, setScrolledToBottom] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-export default codeOfConduct;
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const isBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 24;
+    if (isBottom) setScrolledToBottom(true);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.3 }}
+      className="space-y-5"
+    >
+      <div>
+        <h3 className="text-xl font-bold text-white">Community Code of Conduct</h3>
+        <p className="mt-1 text-sm text-neutral-400">
+          Please read through before joining. Scroll to the end to continue.
+        </p>
+      </div>
+
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="h-72 overflow-y-auto rounded-xl border border-white/10 bg-black/40 p-4 text-sm leading-relaxed text-neutral-300"
+      >
+        {codeOfConduct.map((section, i) => (
+          <section key={section.title} className="mb-5">
+            <h4 className="mb-2 text-sm font-bold text-white">
+              <span className="text-red-500">{i + 1}.</span> {section.title}
+            </h4>
+            <ul className="space-y-2">
+              {section.items.map((item, j) => (
+                <li key={j} className="flex gap-3">
+                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-red-500/70" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+
+        <p className="rounded-lg border border-red-500/30 bg-red-500/5 p-3 text-xs text-neutral-300">
+          <strong className="text-white">Important: </strong>
+          {cocImportant}
+        </p>
+
+        <p className="mt-5 text-center text-xs italic text-neutral-500">{cocMotto}</p>
+      </div>
+
+      <label className="flex cursor-pointer items-start gap-3 text-sm text-neutral-300">
+        <input
+          type="checkbox"
+          checked={accepted}
+          disabled={!scrolledToBottom}
+          onChange={(e) => setAccepted(e.target.checked)}
+          className="mt-0.5 h-4 w-4 accent-red-600 disabled:opacity-40"
+        />
+        <span className={scrolledToBottom ? "" : "opacity-50"}>
+          I have read and agree to the ThePoloClub.BLR Code of Conduct, and I participate
+          at my own risk.
+        </span>
+      </label>
+
+      {!scrolledToBottom && (
+        <p className="text-xs text-neutral-500">Scroll to the end to continue.</p>
+      )}
+
+      {submitError && (
+        <div className="flex items-start gap-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>{submitError}</span>
+        </div>
+      )}
+
+      <div className="flex gap-3 pt-2">
+        <button
+          type="button"
+          onClick={onBack}
+          disabled={submitting}
+          className="flex-1 rounded-full border border-white/15 py-3 text-sm font-bold tracking-wide text-neutral-300 transition hover:bg-white/5 disabled:opacity-50"
+        >
+          BACK
+        </button>
+        <button
+          type="button"
+          onClick={onSubmit}
+          disabled={!accepted || submitting}
+          className="flex-1 rounded-full bg-red-600 py-3 text-sm font-bold tracking-wide text-white transition hover:bg-red-500 disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:text-neutral-400"
+        >
+          {submitting ? (
+            <span className="flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              SUBMITTING
+            </span>
+          ) : (
+            "SUBMIT APPLICATION"
+          )}
+        </button>
+      </div>
+    </motion.div>
+  );
+}
