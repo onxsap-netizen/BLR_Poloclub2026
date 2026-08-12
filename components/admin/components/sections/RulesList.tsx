@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
-import { codeOfConduct } from "@/lib/codeOfConduct";
+import { codeOfConductRules as codeOfConduct } from "@/lib/codeOfConduct";
 
 export default function RulesList() {
   return (
