@@ -1,3 +1,6 @@
+"use client";
+   import { useState } from "react";
+   import RegisterDialog from "@/components/events/RegisterDialog";
 import Image from "next/image";
 import { Calendar, MapPin, Car } from "lucide-react";
 import type { Event } from "@/lib/types";
