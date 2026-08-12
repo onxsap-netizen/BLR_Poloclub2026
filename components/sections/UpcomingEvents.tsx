@@ -47,8 +47,7 @@ export default function UpcomingEvents({ events }: { events: Event[] }) {
               className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 transition hover:border-accent/40"
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden">
-                {event.image_url ? (
-                  <Image
+               {event.cover_image_url ? (` and `src={event.cover_image_url}`.
                     src={event.image_url}
                     alt={event.title}
                     fill
