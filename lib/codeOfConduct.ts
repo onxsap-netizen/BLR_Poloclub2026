@@ -1,4 +1,5 @@
 export type CocSection = { title: string; items: string[] };
+export type CocRule = { title: string; body: string };
 
 export const codeOfConduct: CocSection[] = [
   {
@@ -104,6 +105,11 @@ export const codeOfConduct: CocSection[] = [
     ],
   },
 ];
+
+export const codeOfConductRules: CocRule[] = codeOfConduct.map((section) => ({
+  title: section.title,
+  body: section.items.join(" "),
+}));
 
 export const cocImportant =
   "Violation of any community or event rule may result in immediate removal from the event and/or permanent removal from ThePoloClub.BLR without any refund or prior notice. All decisions made by the organising team are final.";
