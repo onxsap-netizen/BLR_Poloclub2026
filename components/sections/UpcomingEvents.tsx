@@ -1,9 +1,6 @@
 import EventRegisterButton from "@/components/events/EventRegisterButton";
-"use client";
-   import { useState } from "react";
-   import RegisterDialog from "@/components/events/RegisterDialog";
 import Image from "next/image";
-import { Calendar, MapPin, Car } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import type { Event } from "@/lib/types";
 
 function formatDate(dateStr: string) {
@@ -34,55 +31,73 @@ export default function UpcomingEvents({ events }: { events: Event[] }) {
   return (
     <section className="bg-base py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="mb-12 text-center">
+        <div className="text-center">
           <span className="font-display text-sm font-semibold uppercase tracking-[0.3em] text-accent">
             Upcoming Events
           </span>
-          <h2 className="mt-4 font-display text-4xl font-bold uppercase leading-tight sm:text-5xl">
+          <h2 className="mt-4 font-display text-4xl font-bold uppercase text-white md:text-5xl">
             Mark Your <span className="text-accent">Calendar</span>
           </h2>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {events.map((event) => (
-            <div
+            <article
               key={event.id}
-              className="group overflow-hidden rounded-2xl border border-base-border bg-base-panel transition-colors hover:border-accent/50"
+              className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 transition hover:border-accent/40"
             >
-              <div className="relative aspect-video overflow-hidden bg-base-elevated">
-                {event.cover_image_url ? (
+              <div className="relative aspect-[16/10] w-full overflow-hidden">
+                {event.image_url ? (
                   <Image
-                    src={event.cover_image_url}
+                    src={event.image_url}
                     alt={event.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-silver">
-                    <Car size={32} />
-                  </div>
-                )}
-                <div className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-wider text-off">
-                  {event.category}
-                </div>
+                ) : null}
+                {event.category ? (
+                  <span className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
+                    {event.category}
+                  </span>
+                ) : null}
               </div>
-              <div className="p-6">
-                <h3 className="font-display text-xl font-semibold uppercase leading-tight tracking-wide">
+
+              <div className="flex flex-1 flex-col p-5">
+                <h3 className="font-display text-lg font-bold uppercase text-white">
                   {event.title}
                 </h3>
+
                 <p className="mt-3 flex items-center gap-2 text-sm text-silver">
-                  <Calendar size={15} className="text-accent" />
-                  {formatDate(event.event_date)}
-                  {event.event_time ? ` · ${event.event_time}` : ""}
+                  <Calendar className="h-4 w-4 shrink-0 text-accent" />
+                  <span>
+                    {formatDate(event.event_date)}
+                    {event.event_time ? " · " + event.event_time : ""}
+                  </span>
                 </p>
-                <p className="mt-1.5 flex items-center gap-2 text-sm text-silver">
-                  <MapPin size={15} className="text-accent" /> {event.location}
-                </p>
-                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-silver">
-                  {event.description}
-                </p>
+
+                {event.location ? (
+                  <p className="mt-2 flex items-center gap-2 text-sm text-silver">
+                    <MapPin className="h-4 w-4 shrink-0 text-accent" />
+                    <span>{event.location}</span>
+                  </p>
+                ) : null}
+
+                {event.description ? (
+                  <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-silver">
+                    {event.description}
+                  </p>
+                ) : null}
+
+                <div className="mt-auto">
+                  <EventRegisterButton
+                    title={event.title}
+                    date={formatDate(event.event_date)}
+                    location={event.location ?? undefined}
+                  />
+                </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
